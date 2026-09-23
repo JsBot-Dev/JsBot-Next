@@ -1,0 +1,32 @@
+{
+  "name": "jsbot-next",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/JsBot-Dev/JsBot-Next#readme",
+  "bugs": {
+    "url": "https://github.com/JsBot-Dev/JsBot-Next/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JsBot-Dev/JsBot-Next.git"
+  },
+  "license": "AGPL-3.0-or-later",
+  "author": "J-SLY",
+  "type": "module",
+  "main": "./src/app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tsx watch ./src/app.ts"
+  },
+  "dependencies": {
+    "@snowluma/sdk": "^1.14.15",
+    "@types/better-sqlite3": "^9.6.0",
+    "better-sqlite3": "^13.0.3",
+    "fast-glob": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
