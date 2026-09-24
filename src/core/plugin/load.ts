@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import JsBot from '../bot';
 import { ADMIN_COMMAND_LIST, COMMAND_LIST, SUPERADMIN_COMMAND_LIST } from '../decorator/command';
+import { MIDDLEWARE } from '../decorator/middleware';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,4 +24,5 @@ export default async function pluginLoad(bot:JsBot) {
     bot.commands = COMMAND_LIST
     bot.adminCommands = ADMIN_COMMAND_LIST
     bot.superAdminCommands = SUPERADMIN_COMMAND_LIST
+    bot.middlewares = MIDDLEWARE
 }

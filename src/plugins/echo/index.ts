@@ -4,7 +4,8 @@ import { CommandContext } from "../../core/types/types";
 
 export default class EchoPlugin{
     @Command('utter')
-    async utter(_eve:OneBotMessageEvent,ctx:CommandContext,match:CommandMatch){
+    async utter(event:OneBotMessageEvent,ctx:CommandContext,match:CommandMatch){
+        console.log('utter has benn used')
         await ctx.reply(match.rest)
     }
 }
