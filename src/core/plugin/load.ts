@@ -2,7 +2,7 @@ import fg from 'fast-glob'
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import JsBot from '../bot';
-import { COMMAND_LIST } from '../command';
+import { ADMIN_COMMAND_LIST, COMMAND_LIST, SUPERADMIN_COMMAND_LIST } from '../decorator/command';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,4 +21,6 @@ export default async function pluginLoad(bot:JsBot) {
         }
     }
     bot.commands = COMMAND_LIST
+    bot.adminCommands = ADMIN_COMMAND_LIST
+    bot.superAdminCommands = SUPERADMIN_COMMAND_LIST
 }

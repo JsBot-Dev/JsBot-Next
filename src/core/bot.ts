@@ -7,6 +7,9 @@ class JsBot {
     config: JsBotConfig
     isStrat: boolean = false
     commands: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
+    adminCommands: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
+    superAdminCommands: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
+    
     constructor() {
         this.config = new JsBotConfig
         this.client = new SnowLumaWebSocketClient({
