@@ -4,7 +4,7 @@ import { CommandContext } from "../../core/types/types";
 
 export default class EchoPlugin{
     @Command('utter')
-    command(_eve:OneBotMessageEvent,ctx:CommandContext,match:CommandMatch){
-        ctx.reply(match.rest)
+    async utter(_eve:OneBotMessageEvent,ctx:CommandContext,match:CommandMatch){
+        await ctx.reply(match.rest)
     }
 }

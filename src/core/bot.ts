@@ -6,10 +6,10 @@ class JsBot {
     readonly client: SnowLumaWebSocketClient;
     config: JsBotConfig
     isStrat: boolean = false
-    commands: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
-    adminCommands: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
-    superAdminCommands: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
-    
+    commands: Map<string,CommandHandler<OneBotMessageEvent>> = new Map()
+    adminCommands: Map<string,CommandHandler<OneBotMessageEvent> > = new Map()
+    superAdminCommands: Map<string,CommandHandler<OneBotMessageEvent>> = new Map()
+
     constructor() {
         this.config = new JsBotConfig
         this.client = new SnowLumaWebSocketClient({

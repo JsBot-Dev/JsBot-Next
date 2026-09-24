@@ -1,13 +1,13 @@
 import { CommandHandler, OneBotMessageEvent } from "@snowluma/sdk";
 
-const COMMAND_LIST: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = [];
-const ADMIN_COMMAND_LIST: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = [];
-const SUPERADMIN_COMMAND_LIST: Array<{ name: string, fn: CommandHandler<OneBotMessageEvent> }> = []
+const COMMAND_LIST = new Map<string, CommandHandler<OneBotMessageEvent>>
+const ADMIN_COMMAND_LIST = new Map<string, CommandHandler<OneBotMessageEvent>>
+const SUPERADMIN_COMMAND_LIST = new Map<string, CommandHandler<OneBotMessageEvent>>
 
 function Command(name: string) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
-            COMMAND_LIST.push({ name, fn: value.bind(this) })
+            COMMAND_LIST.set(name, value.bind(this))
         })
         return value
     }
@@ -16,7 +16,7 @@ function Command(name: string) {
 function AdminCommand(name: string) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
-            ADMIN_COMMAND_LIST.push({ name, fn: value.bind(this) })
+            ADMIN_COMMAND_LIST.set(name, value.bind(this))
         })
         return value
     }
@@ -24,7 +24,7 @@ function AdminCommand(name: string) {
 function SuperAdminCommand(name: string) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
-            SUPERADMIN_COMMAND_LIST.push({ name, fn: value.bind(this) })
+            SUPERADMIN_COMMAND_LIST.set(name, value.bind(this))
         })
         return value
     }
