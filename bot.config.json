@@ -1,4 +1,12 @@
 {
-    "url":"ws://localhost:3001/",
-    "token":"6def58d3bd51de8ab1a58d5ce8e72581e3e5cff1f3f20063e05f18c31663fcb0"
+    "url": "ws://localhost:3001/",
+    "token": "6def58d3bd51de8ab1a58d5ce8e72581e3e5cff1f3f20063e05f18c31663fcb0",
+    "role": {
+        "Superadmin":[
+            
+        ],
+        "Admin":[
+            
+        ]
+    }
 }

@@ -9,6 +9,7 @@ class JsBot {
     config: JsBotConfig
     started: boolean = false
     handers: Map<string, HandlerMeta> = new Map()
+    plugins: any[] = []
     constructor() {
         this.config = new JsBotConfig
         this.client = new SnowLumaWebSocketClient({

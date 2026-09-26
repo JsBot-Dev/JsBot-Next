@@ -12,13 +12,16 @@ export default async function pluginLoad(bot:JsBot) {
         absolute: true,
         onlyFiles: true,
     })
+    const plugins = [];
     for (const file of files) {
         try {
             const PluginClass = (await import(pathToFileURL(file).href)).default
+            plugins.push(PluginClass)
             new PluginClass(bot)
         } catch(e){
             console.error(`Import Failed: ${e}`)
         }
     }
     bot.handers = Handlers
+    bot.plugins = plugins
 }

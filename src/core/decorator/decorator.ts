@@ -15,7 +15,7 @@ function Command() {
             Handlers.set(
                 context.name as string,
                 {
-                    handler: value,
+                    handler: value.bind(this),
                     type: 'Command',
                     permission: 'User'
                 }
@@ -30,7 +30,7 @@ function Middleware() {
             Handlers.set(
                 context.name as string,
                 {
-                    handler: value,
+                    handler: value.bind(this),
                     type: 'Middleware'
                 }
             )

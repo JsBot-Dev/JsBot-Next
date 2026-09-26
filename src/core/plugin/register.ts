@@ -9,6 +9,9 @@ export default function pluginRegister(bot: JsBot) {
             case 'Request': 
                 bot.client.onRequest(meta.handler)
                 break
+            case 'Middleware':
+                bot.client.use(meta.handler)
+                break
         }
     }
 }
