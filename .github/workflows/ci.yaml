@@ -20,3 +20,5 @@ jobs:
         run: npm ci
       - name: check
         run: npx tsc --noEmit
+      - name: test
+        run: npm test
