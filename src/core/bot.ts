@@ -3,14 +3,12 @@ import JsBotConfig from './config'
 import pluginLoad from './plugin/load';
 import pluginRegister from './plugin/register';
 import { eventInjection } from './middleware/admin';
+import { HandlerMeta } from './decorator/decorator';
 class JsBot {
     readonly client: SnowLumaWebSocketClient;
     config: JsBotConfig
     isStrat: boolean = false
-    commands: Map<string,CommandHandler<OneBotMessageEvent>> = new Map()
-    adminCommands: Map<string,CommandHandler<OneBotMessageEvent> > = new Map()
-    superAdminCommands: Map<string,CommandHandler<OneBotMessageEvent>> = new Map()
-    middlewares: Array<EventMiddleware> = new Array()
+    handers: Map<string, HandlerMeta> = new Map()
     constructor() {
         this.config = new JsBotConfig
         this.client = new SnowLumaWebSocketClient({
