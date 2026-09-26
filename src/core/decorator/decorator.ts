@@ -1,10 +1,10 @@
 import { EventHandler } from "@snowluma/sdk";
 
 export type PermissionType = 'User' | 'Admin' | 'Superadmin'
-export type EventType = 'Command' | 'Request'
+export type HandlerType = 'Command' | 'Request' | 'Middleware'
 export interface HandlerMeta {
     handler: EventHandler
-    type: EventType
+    type: HandlerType
     permission?: PermissionType
 }
 const Handlers: Map<string, HandlerMeta> = new Map()
@@ -24,6 +24,20 @@ function Command() {
         return value
     }
 }
+function Middleware() {
+    return function (value: any, context: ClassMethodDecoratorContext) {
+        context.addInitializer(function (this: any) {
+            Handlers.set(
+                context.name as string,
+                {
+                    handler: value,
+                    type: 'Middleware'
+                }
+            )
+        })
+        return value
+    }
+}
 function Permission(permission: PermissionType) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
@@ -32,6 +46,7 @@ function Permission(permission: PermissionType) {
                 if (meta) meta.permission = permission
             })
         })
+        return value
     }
 }
-export { Command, Permission, Handlers }
+export { Command, Permission, Middleware, Handlers }

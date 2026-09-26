@@ -15,9 +15,9 @@ export default async function pluginLoad(bot:JsBot) {
     for (const file of files) {
         try {
             const PluginClass = (await import(pathToFileURL(file).href)).default
-            new PluginClass()
+            new PluginClass(bot)
         } catch(e){
-            console.error(`导入插件失败:${e}`)
+            console.error(`Import Failed: ${e}`)
         }
     }
     bot.handers = Handlers

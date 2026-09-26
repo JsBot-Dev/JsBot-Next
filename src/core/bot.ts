@@ -7,7 +7,7 @@ import { HandlerMeta } from './decorator/decorator';
 class JsBot {
     readonly client: SnowLumaWebSocketClient;
     config: JsBotConfig
-    isStrat: boolean = false
+    started: boolean = false
     handers: Map<string, HandlerMeta> = new Map()
     constructor() {
         this.config = new JsBotConfig
@@ -17,8 +17,8 @@ class JsBot {
         })
     }
     public async start() {
-        if (this.isStrat) return
-        this.isStrat = true
+        if (this.started) return
+        this.started = true
 
         this.client.use(eventInjection as EventMiddleware)
         await pluginLoad(this)
