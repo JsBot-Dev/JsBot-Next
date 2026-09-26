@@ -4,4 +4,4 @@ const bot = new JsBot()
 
 await bot.start()
 
-console.log(bot.handers)
+// console.log(bot.handers)
