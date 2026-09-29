@@ -3,7 +3,7 @@ import { CommandContext } from "../types/types";
 import { Handlers } from "../decorator/decorator";
 
 
-export function eventInjection(event: OneBotMessageEvent, ctx: CommandContext, next: EventNext) {
+export function EventInjection(event: OneBotMessageEvent, ctx: CommandContext, next: EventNext) {
     const message = event.raw_message
     if (!message) return next()
     const messages = message.split(" ")
@@ -13,5 +13,6 @@ export function eventInjection(event: OneBotMessageEvent, ctx: CommandContext, n
     const meta = Handlers.get(prefix)
     if(!meta) return next()
     event.admin_level = meta.permission
+    event.plugin = meta.plugin
     return next()
 }

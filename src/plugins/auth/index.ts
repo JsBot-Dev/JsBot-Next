@@ -1,4 +1,4 @@
-import { EventNext, OneBotMessageEvent, text } from "@snowluma/sdk";
+import { chain, EventNext, OneBotMessageEvent} from "@snowluma/sdk";
 import { Middleware } from "../../core/decorator/decorator";
 import { JsBotBasePlugin } from "../../core/plugin/base";
 import { CommandContext } from "../../core/types/types";
@@ -27,6 +27,6 @@ export default class AuthPlugin extends JsBotBasePlugin {
         return next()
     }
     async refuse(ctx: CommandContext, event: OneBotMessageEvent) {
-        return await ctx.reply(text("权限不足").face(79))
+        return await ctx.reply(chain().reply(event.message_id).text("权限不足").face(79))
     }
 }

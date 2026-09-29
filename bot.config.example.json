@@ -1,4 +1,12 @@
 {
     "url":"ws://localhost:3001/",
-    "token":"token"
+    "token":"token",
+    "role": {
+        "Superadmin":[
+            10001
+        ],
+        "Admin":[
+            10002
+        ]
+    }
 }

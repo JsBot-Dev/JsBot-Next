@@ -2,7 +2,7 @@ import { CommandHandler, EventMiddleware, OneBotMessageEvent, SnowLumaWebSocketC
 import JsBotConfig from './config'
 import pluginLoad from './plugin/load';
 import pluginRegister from './plugin/register';
-import { eventInjection } from './middleware/admin';
+import { EventInjection } from './middleware/injection';
 import { HandlerMeta } from './decorator/decorator';
 class JsBot {
     readonly client: SnowLumaWebSocketClient;
@@ -21,7 +21,7 @@ class JsBot {
         if (this.started) return
         this.started = true
 
-        this.client.use(eventInjection as EventMiddleware)
+        this.client.use(EventInjection as EventMiddleware)
         await pluginLoad(this)
         pluginRegister(this)
         

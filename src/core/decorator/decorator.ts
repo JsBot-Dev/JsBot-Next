@@ -6,22 +6,20 @@ export interface HandlerMeta {
     handler: EventHandler
     type: HandlerType
     permission?: PermissionType
+    plugin: string
 }
 const Handlers: Map<string, HandlerMeta> = new Map()
 
-function Command() {
+function Command(name: string, permission?: PermissionType) {
     return function (value: any, context: ClassMethodDecoratorContext) {
-        context.addInitializer(function (this: any) {
-            Handlers.set(
-                context.name as string,
-                {
-                    handler: value.bind(this),
-                    type: 'Command',
-                    permission: 'User'
-                }
-            )
+        context.addInitializer(function(this:any){
+            Handlers.set(name,{
+                handler: value.bind(this),
+                type:'Command',
+                permission:permission||'User',
+                plugin: this.constructor.name
+            })
         })
-        return value
     }
 }
 function Middleware() {
@@ -31,22 +29,12 @@ function Middleware() {
                 context.name as string,
                 {
                     handler: value.bind(this),
-                    type: 'Middleware'
+                    type: 'Middleware',
+                    plugin: this.constructor.name
                 }
             )
         })
         return value
     }
 }
-function Permission(permission: PermissionType) {
-    return function (value: any, context: ClassMethodDecoratorContext) {
-        context.addInitializer(function (this: any) {
-            queueMicrotask(() => {
-                const meta = Handlers.get(context.name as string)
-                if (meta) meta.permission = permission
-            })
-        })
-        return value
-    }
-}
-export { Command, Permission, Middleware, Handlers }
+export { Command, Middleware, Handlers }
