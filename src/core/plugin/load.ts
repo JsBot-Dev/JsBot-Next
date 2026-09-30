@@ -6,9 +6,10 @@ import { Handlers } from '../decorator/decorator';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default async function pluginLoad(bot:JsBot) {
-    const files = await fg("../plugins/*/index.ts", {
-        cwd: path.join(__dirname, '..'),
+export default async function pluginLoad(bot:JsBot,loadPath?:string) {
+    let cwd = loadPath?loadPath:path.join(__dirname, '../..')
+    const files = await fg("./plugins/*/index.ts", {
+        cwd,
         absolute: true,
         onlyFiles: true,
     })

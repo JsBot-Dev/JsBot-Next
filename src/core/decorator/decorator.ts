@@ -13,7 +13,7 @@ const Handlers: Map<string, HandlerMeta> = new Map()
 function Command(name: string, permission?: PermissionType) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function(this:any){
-            Handlers.set(name,{
+            Handlers.set(name.toLowerCase(),{
                 handler: value.bind(this),
                 type:'Command',
                 permission:permission||'User',

@@ -2,8 +2,9 @@ import { CommandHandler, EventMiddleware, OneBotMessageEvent, SnowLumaWebSocketC
 import JsBotConfig from './config'
 import pluginLoad from './plugin/load';
 import pluginRegister from './plugin/register';
-import { EventInjection } from './middleware/injection';
 import { HandlerMeta } from './decorator/decorator';
+import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 class JsBot {
     readonly client: SnowLumaWebSocketClient;
     config: JsBotConfig
@@ -18,10 +19,12 @@ class JsBot {
         })
     }
     public async start() {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
         if (this.started) return
         this.started = true
 
-        this.client.use(EventInjection as EventMiddleware)
+        await pluginLoad(this,path.join(__dirname,'./built-in'))
         await pluginLoad(this)
         pluginRegister(this)
         

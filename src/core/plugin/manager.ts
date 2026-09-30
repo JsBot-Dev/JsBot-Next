@@ -1,5 +1,5 @@
-export type PluginStatus = 'Enable'|'Disablr'
+export type PluginStatus = 'enable'|'disable'
 export interface PluginSetting{
-    status:PluginSetting,
+    status:PluginStatus,
     list?:number[]
 }

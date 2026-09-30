@@ -9,7 +9,7 @@ class JsBotConfig {
     WebSocketBaseUrl: string = ''
     WebSocketToken: string = ''
     Role: RoleConfig = { Superadmin: [], Admin: [] }
-    PluginSetting:PluginSetting[] = []
+    PluginConfig: Map<string, PluginSetting> = new Map()
     constructor() {
         this.readConfig()
     }
@@ -21,7 +21,9 @@ class JsBotConfig {
             this.WebSocketBaseUrl = config?.url
             this.WebSocketToken = config?.token
             this.Role = config?.role
-            this.PluginSetting = config?.plugin
+            this.PluginConfig = new Map(
+                Object.entries(config?.plugin ?? {})
+            )
         } catch (error) {
             console.error(`Read Config Failed: ${error}`)
             process.exit(0)
