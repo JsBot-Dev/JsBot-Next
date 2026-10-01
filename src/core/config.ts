@@ -25,8 +25,7 @@ class JsBotConfig {
                 Object.entries(config?.plugin ?? {})
             )
         } catch (error) {
-            console.error(`Read Config Failed: ${error}`)
-            process.exit(0)
+            throw new Error(`Read Config Failed: ${error}`)
         }
     }
 }

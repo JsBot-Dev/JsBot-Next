@@ -21,14 +21,15 @@ class JsBot {
     public async start() {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = dirname(__filename);
+        
         if (this.started) return
-        this.started = true
 
         await pluginLoad(this,path.join(__dirname,'./built-in'))
         await pluginLoad(this)
         pluginRegister(this)
         
         await this.client.connect()
+        this.started = true
     }
 }
 
