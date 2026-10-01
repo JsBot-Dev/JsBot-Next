@@ -19,6 +19,7 @@
     "dev": "npx tsx watch ./src/app.ts"
   },
   "dependencies": {
+    "@isdk/kvsqlite": "^0.6.31",
     "@snowluma/sdk": "^1.14.15",
     "@types/better-sqlite3": "^9.6.0",
     "better-sqlite3": "^13.0.3",

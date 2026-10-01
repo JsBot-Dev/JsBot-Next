@@ -18,7 +18,7 @@ export default async function pluginLoad(bot:JsBot,loadPath?:string) {
         try {
             const PluginClass = (await import(pathToFileURL(file).href)).default
             const plugin = new PluginClass(bot)
-            plugins.push(plugin)
+            plugins.push(plugin.name)
         } catch(e){
             throw new Error(`Import Failed: ${e}`)
         }
