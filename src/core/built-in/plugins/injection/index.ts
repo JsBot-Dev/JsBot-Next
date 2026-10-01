@@ -13,7 +13,7 @@ export default class InjectionPlugin extends JsBotBasePlugin {
         if (!messages[0].startsWith('/')) return next()
         const prefix = messages[0].slice(1).toLowerCase()
         if (!prefix) return next()
-        const meta = Handlers.get(prefix)
+        const meta = Handlers.get(`Command::${prefix}`)
         if (!meta) return next()
         event.admin_level = meta.permission
         event.plugin = meta.plugin

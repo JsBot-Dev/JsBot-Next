@@ -18,6 +18,7 @@ export default class PluginSetting extends JsBotBasePlugin {
             if (!config.list || config.list.length === 0) return
             if (!config.list.includes(event.group_id)) return next()
         }
-        return
+        console.warn(`${event.plugin}的配置值无效`)
+        return next()
     }
 }

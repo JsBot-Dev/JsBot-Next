@@ -24,5 +24,5 @@ export default async function pluginLoad(bot:JsBot,loadPath?:string) {
         }
     }
     bot.handers = Handlers
-    for(const plugin of plugins) bot.plugins.push(plugin)
+    bot.plugins.push(...plugins)
 }

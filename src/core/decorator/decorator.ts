@@ -31,7 +31,7 @@ function Middleware() {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
             const name = (context.name as string).toLowerCase()
-            if (Handlers.get(name))
+            if (Handlers.get(`Middleware::${name}`))
                 throw new Error(`Register Failed: '${name}' Has already been registered.`)
             Handlers.set(
                 `Middleware::${name}`,
@@ -48,7 +48,7 @@ function Notice(notice: string) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
             const name = (context.name as string).toLowerCase()
-            if (Handlers.get(name))
+            if (Handlers.get(`Notice::${name}`))
                 throw new Error(`Register Failed: '${name}' Has already been registered.`)
             Handlers.set(
                 `Notice::${name}`,

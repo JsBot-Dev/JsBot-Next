@@ -2,7 +2,7 @@ import JsBot from "../bot";
 
 export default function pluginRegister(bot: JsBot) {
     for (let [name, meta] of bot.handers) {
-        name = name.replace(/^(Command|Middleware)::/, "")
+        name = name.replace(/^(Command|Middleware|Notice)::/, "")
         switch (meta.type) {
             case 'Command':
                 bot.client.command(name, meta.handler)
