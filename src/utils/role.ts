@@ -1,4 +1,4 @@
-import JsBotConfig from "../core/config";
+import JsBotConfig from "../core/config/config";
 import { PermissionType } from "../core/decorator/decorator";
 
 export default function getRole(config:JsBotConfig,user:number):PermissionType{

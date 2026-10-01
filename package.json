@@ -23,8 +23,9 @@
     "@types/better-sqlite3": "^9.6.0",
     "better-sqlite3": "^13.0.3",
     "fast-glob": "^3.3.3",
+    "pm2": "^7.0.4",
     "tsx": "^4.23.13",
-    "pm2": "^7.0.4"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^26.6.1",

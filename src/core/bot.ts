@@ -1,5 +1,5 @@
 import { CommandHandler, EventMiddleware, OneBotMessageEvent, SnowLumaWebSocketClient } from '@snowluma/sdk';
-import JsBotConfig from './config'
+import JsBotConfig from './config/config'
 import pluginLoad from './plugin/load';
 import pluginRegister from './plugin/register';
 import { HandlerMeta } from './decorator/decorator';
