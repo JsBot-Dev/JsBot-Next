@@ -1,5 +1,7 @@
 import { z } from "zod";
-const BaseUrl = z.string().regex(/^wss?:\/\/.+/)
+import { PluginSettingSchema } from "../plugin/manager";
+const BaseUrl = z.string().regex(/^wss?:\/\/.+/);
+
 export const JsBotConfigSchema = z.object({
     url: BaseUrl,
     token: z.string().min(1),
@@ -7,13 +9,7 @@ export const JsBotConfigSchema = z.object({
         Superadmin: z.array(z.number()),
         Admin: z.array(z.number()),
     }),
-    plugin: z.record(
-        z.string(),
-        z.object({
-            status: z.enum(["enable", "disable"]),
-            list: z.array(z.number()).optional(),
-        })
-    ),
-});
+    plugin: z.record(z.string(), PluginSettingSchema),
+})
 
-export type JsBotConfig = z.infer<typeof JsBotConfigSchema>;
+export type Config = z.infer<typeof JsBotConfigSchema>

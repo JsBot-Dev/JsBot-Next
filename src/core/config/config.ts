@@ -1,45 +1,45 @@
-import { readFileSync } from 'fs'
-import process from 'process';
-import { PluginSetting } from '../plugin/manager';
-import { JsBotConfigSchema } from './schema';
-import { z } from 'zod';
-export interface RoleConfig {
-    Superadmin: number[]
-    Admin: number[]
-}
+import { readFileSync } from "node:fs";
+import { z } from "zod";
+import { PluginSetting } from "../plugin/manager";
+import { Config, JsBotConfigSchema } from "./schema";
+
+
+
+
 class JsBotConfig {
-    WebSocketBaseUrl: string = "";
-  WebSocketToken: string = "";
-  Role: RoleConfig = { Superadmin: [], Admin: [] };
-  PluginConfig: Map<string, PluginSetting> = new Map();
+    WebSocketBaseUrl: string = ""
+    WebSocketToken: string = ""
+    Role: Config["role"] = { Superadmin: [], Admin: [] }
+    PluginConfig: Map<string, PluginSetting> = new Map()
 
-  constructor() {
-    this.readConfig();
-  }
-
-  public readConfig() {
-    let raw: unknown;
-    try {
-      raw = JSON.parse(readFileSync("./bot.config.json", "utf-8"));
-    } catch (error) {
-      throw new Error(`Read Config Failed: ${error}`);
+    constructor() {
+        this.readConfig()
     }
 
-    const result = JsBotConfigSchema.safeParse(raw);
-    if (!result.success) {
-      throw new Error(
-        `Invalid Config:\n${JSON.stringify(z.treeifyError(result.error), null, 2)}`
-      );
+    public readConfig(): void {
+        let raw: unknown
+        try {
+            raw = JSON.parse(readFileSync("./bot.config.json", "utf-8"))
+        } catch (error) {
+            throw new Error(`Read Config Failed: ${error}`)
+        }
+
+        const result = JsBotConfigSchema.safeParse(raw)
+        if (!result.success) {
+            throw new Error(
+                `Invalid Config:\n${JSON.stringify(z.treeifyError(result.error))}`
+            )
+        }
+
+        const config = result.data
+
+        this.WebSocketBaseUrl = config.url
+        this.WebSocketToken = config.token
+        this.Role = config.role
+        this.PluginConfig = new Map<string, PluginSetting>(
+            Object.entries(config.plugin)
+        )
     }
-
-    const config = result.data;
-
-    this.WebSocketBaseUrl = config.url;
-    this.WebSocketToken = config.token;
-    this.Role = config.role; 
-    this.PluginConfig = new Map(
-      Object.entries(config.plugin) as [string, PluginSetting][]
-    );
-  }
 }
+
 export default JsBotConfig
