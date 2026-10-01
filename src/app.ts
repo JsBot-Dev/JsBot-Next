@@ -4,4 +4,6 @@ const bot = new JsBot()
 
 await bot.start()
 
-// console.log(bot.config.PluginConfig)
+// bot.client.onNotice('group_ban',(event)=>{
+//     // console.log(event.)
+// })
