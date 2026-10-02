@@ -3,7 +3,7 @@ import 'dotenv/config'
 import { JsBotBasePlugin } from '../../core/plugin/base'
 
 const REPOSITORY = 'jsbot-dev/JsBot-Next'
-const POLL_INTERVAL = 150_000
+const POLL_INTERVAL = 30_000
 const EVENTS_URL = `https://api.github.com/repos/${REPOSITORY}/events?per_page=100`
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN
 
@@ -124,9 +124,61 @@ export default class GithubPlugin extends JsBotBasePlugin {
     private formatEvent(event: GitHubEvent): string {
         const actor = event.actor?.login ?? 'unknown user'
         const repository = event.repo?.name ?? REPOSITORY
+        const payload = event.payload ?? {}
         const action = this.eventAction(event)
-        const time = event.created_at ? ` (${event.created_at})` : ''
-        return `[GitHub] ${repository}: ${actor} ${action}${time}`
+        const details = this.eventDetails(event)
+        const url = this.eventUrl(event)
+        const time = event.created_at ? `\n时间: ${event.created_at}` : ''
+        return [
+            `[GitHub] ${repository}`,
+            `类型: ${event.type}`,
+            `用户: ${actor}`,
+            `动作: ${action}`,
+            details,
+            url ? `链接: ${url}` : '',
+            time,
+        ].filter(Boolean).join('\n')
+    }
+
+    private eventDetails(event: GitHubEvent): string {
+        const payload = event.payload ?? {}
+        const object = (key: string): Record<string, unknown> => {
+            const value = payload[key]
+            return value && typeof value === 'object' ? value as Record<string, unknown> : {}
+        }
+        const issue = object('issue')
+        const pullRequest = object('pull_request')
+        const release = object('release')
+        const comment = object('comment')
+        const ref = typeof payload.ref === 'string' ? payload.ref : undefined
+        const message = typeof payload.message === 'string' ? payload.message.split('\n')[0] : undefined
+        const title = typeof issue.title === 'string' ? issue.title
+            : typeof pullRequest.title === 'string' ? pullRequest.title
+                : typeof release.name === 'string' ? release.name : undefined
+        const commentBody = typeof comment.body === 'string' ? comment.body.split('\n')[0] : undefined
+
+        return [
+            title ? `标题: ${title}` : '',
+            message ? `提交: ${message}` : '',
+            ref ? `引用: ${ref}` : '',
+            commentBody ? `评论: ${commentBody}` : '',
+        ].filter(Boolean).join('\n')
+    }
+
+    private eventUrl(event: GitHubEvent): string | undefined {
+        const payload = event.payload ?? {}
+        const object = (key: string): Record<string, unknown> => {
+            const value = payload[key]
+            return value && typeof value === 'object' ? value as Record<string, unknown> : {}
+        }
+        const candidates = [
+            object('issue').html_url,
+            object('pull_request').html_url,
+            object('release').html_url,
+            object('comment').html_url,
+            payload.compare,
+        ]
+        return candidates.find((value): value is string => typeof value === 'string')
     }
 
     private eventAction(event: GitHubEvent): string {
@@ -134,7 +186,7 @@ export default class GithubPlugin extends JsBotBasePlugin {
         const action = typeof payload.action === 'string' ? ` ${payload.action}` : ''
 
         switch (event.type) {
-            case 'PushEvent': return 'pushed commits'
+            case 'PushEvent': return `推送提交 (${String(payload.ref ?? 'unknown branch')})`
             case 'ReleaseEvent': return `published a release${action}`
             case 'IssuesEvent': return `updated an issue${action}`
             case 'IssueCommentEvent': return 'commented on an issue or pull request'
