@@ -8,5 +8,13 @@
         "Admin":[
             10002
         ]
+    },
+    "plugin":{
+        "EchoPlugin":{
+            "status":"enable",
+            "list":[
+                
+            ]
+        }
     }
 }

@@ -18,6 +18,6 @@ export class KvData {
         return this.db.set({ _id: key, value }, { collection })
     }
     async get(collection: string, key: string) {
-        return this.db.get(key, { collection }).值;
+        return this.db.get(key, { collection })?.值;
     }
 }
