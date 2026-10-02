@@ -35,7 +35,7 @@ class JsBot {
             this.db = new KvData(this.plugins)
             log.info(`\x1b[1;35mStart Register Handlers\x1b[0m`)
             pluginRegister(this)
-            log.info(`\x1b[1;35mSuccessfully started up JsBot`)
+            log.info(`\x1b[1;35mSuccessfully started up JsBot\x1b[0m`)
         }catch(e){
             log.error(`Failed to start JsBot:\n${e}`)
             process.exit(1)
