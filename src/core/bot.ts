@@ -22,11 +22,12 @@ class JsBot {
         })
     }
     public async start() {
-        const log = new logger(`[bot]`)
+        const log = new logger(`[bot::start]`)
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = dirname(__filename);
 
         if (this.started) return
+        log.info(`\x1b[1;35mTry Starting JsBot\x1b[0m`)
         try {
             log.info(`\x1b[1;35mStart Loading Built-in Plugins\x1b[0m`)
             await pluginLoad(this, path.join(__dirname, './built-in'))

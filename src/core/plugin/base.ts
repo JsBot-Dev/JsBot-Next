@@ -4,7 +4,7 @@ import logger from "../logger/logger";
 export class JsBotBasePlugin {
     readonly bot: JsBot
     name: string = this.constructor.name
-    logger: logger = new logger(`[bot::${this.constructor.name}]`)
+    logger: logger = new logger(`[bot::plugin::${this.constructor.name}]`)
     constructor(bot: JsBot) {
         this.bot = bot
     }
