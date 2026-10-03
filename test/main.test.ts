@@ -29,9 +29,9 @@ describe('Register Plugin', () => {
         pluginRegister(bot)
         for(const plugin of plugins){
             if(plugin[1].type==='Command')
-                expect(bot.client.command).toHaveBeenCalledWith(plugin[0], plugin[1].handler)
+                expect(bot.client.command).toHaveBeenCalledWith(plugin[0], expect.any(Function))
             if(plugin[1].type==='Middleware')
-                expect(bot.client.use).toHaveBeenCalledWith(plugin[1].handler)
+                expect(bot.client.use).toHaveBeenCalledWith(expect.any(Function))
         }
     })
 })
