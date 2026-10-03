@@ -15,12 +15,12 @@ export default class AuthPlugin extends JsBotBasePlugin {
                 if (user === 'Superadmin')
                     return next()
                 await this.refuse(ctx,event)
-                return
+                return ctx.stopPropagation()
             case 'Admin':
                 if (user !== 'User')
                     return next()
                 await this.refuse(ctx,event)
-                return
+                return ctx.stopPropagation()
             case 'User':
                 return next()
         }
