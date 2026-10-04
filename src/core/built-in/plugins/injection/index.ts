@@ -15,7 +15,7 @@ export default class InjectionPlugin extends JsBotBasePlugin {
         if (!prefix) return next()
         const meta = Handlers.get(`Command::${prefix}`)
         if (!meta) return next()
-        event.admin_level = meta.permission
+        event.admin_level = meta.commandOptions?.permission
         event.plugin = meta.plugin
         this.logger.info(`User ${event.sender.nickname}(${event.user_id}) use ${event.admin_level} command /${prefix}`)
         return next()

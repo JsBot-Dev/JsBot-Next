@@ -5,13 +5,18 @@ export type HandlerType = 'Command' | 'Request' | 'Middleware' | 'Notice'
 export interface HandlerMeta {
     handler: EventHandler
     type: HandlerType
-    permission?: PermissionType
+    // permission?: PermissionType
+    commandOptions?: CommandOptions
     plugin: string
     notice?: string
 }
+export interface CommandOptions {
+    permission?: PermissionType,
+    docs?: string
+}
 const Handlers: Map<string, HandlerMeta> = new Map()
 
-function Command(name: string, permission?: PermissionType) {
+function Command(name: string, option?: CommandOptions) {
     return function (value: any, context: ClassMethodDecoratorContext) {
         context.addInitializer(function (this: any) {
             name = name.toLowerCase()
@@ -21,7 +26,10 @@ function Command(name: string, permission?: PermissionType) {
             Handlers.set(`Command::${name}`, {
                 handler: value.bind(this),
                 type: 'Command',
-                permission: permission || 'User',
+                commandOptions: {
+                    permission: option?.permission || 'User',
+                    docs: option?.docs || '该指令没有描述'
+                },
                 plugin: this.constructor.name
             })
         })
