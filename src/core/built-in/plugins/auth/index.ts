@@ -1,8 +1,8 @@
 import { chain, EventNext, OneBotMessageEvent} from "@snowluma/sdk";
-import { Middleware } from "../../core/decorator/decorator";
-import { JsBotBasePlugin } from "../../core/plugin/base";
-import { CommandContext } from "../../core/types/types";
-import getRole from "../../utils/role";
+import { Middleware } from "../../../decorator/decorator";
+import { JsBotBasePlugin } from "../../../plugin/base";
+import { CommandContext } from "../../../types/types";
+import getRole from "../../../../utils/role";
 
 export default class AuthPlugin extends JsBotBasePlugin {
     @Middleware()
